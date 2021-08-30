@@ -1,24 +1,22 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect } from "react";
+import "./App.css";
+import { Route } from "react-router-dom";
+import socketClient from "socket.io-client";
+import {} from "./pages/index";
+
+const Server = "http://localhost:3005";
 
 function App() {
+  useEffect(() => {
+    const socket = socketClient(Server);
+    socket.on("connection", () => {
+      console.log("채팅앱 백엔드 연결되었습니다.");
+    });
+  }, [Server]);
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Route path="/" component={Join} />
+      <Route path="/room" component={Room} />
     </div>
   );
 }
