@@ -2,8 +2,6 @@ import { BrowserRouter, Switch, Route } from "react-router-dom";
 import { Join, Room }  from "./pages/index";
 import { Header } from "./layout/index"
 
-const Server = "http://localhost:3005";
-
 function App() {
   return (
     <>
