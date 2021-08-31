@@ -13,10 +13,22 @@ server.listen(port, () => {
   console.log(`Listening on port ${port}`);
 });
 
-// 'connection' 이라는 이벤트를 감지한다.
 io.on("connection", function (socket) {
   console.log("유저 입장");
-  socket.emit("connertion", null);
+  socket.on("join", ({ user, room }, callback) => {
+    socket.broadcast.emit("message", {
+      message: `${user}님이 접속하였습니다.`,
+    });
+    callback();
+  });
+
+  socket.on("sendMessage", (message, callback) => {
+    console.log(message);
+    io.emit("message", { message: message });
+  
+    callback();
+  });
+
   socket.on("disconnect", () => {
     console.log("유저가 떠남");
   });
