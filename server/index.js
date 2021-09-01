@@ -17,15 +17,16 @@ io.on("connection", function (socket) {
   console.log("유저 입장");
   socket.on("join", ({ user, room }, callback) => {
     socket.broadcast.emit("message", {
+      user: "admin",
       message: `${user}님이 접속하였습니다.`,
     });
     callback();
   });
 
-  socket.on("sendMessage", (message, callback) => {
+  socket.on("sendMessage", (user, message, callback) => {
     console.log(message);
-    io.emit("message", { message: message });
-  
+    io.emit("message", { user: user, message: message });
+
     callback();
   });
 

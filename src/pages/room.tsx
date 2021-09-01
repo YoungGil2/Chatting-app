@@ -35,21 +35,41 @@ function Room({location}) {
 
   const sendMessage = (e)=> {
     if(message && e.key === "Enter"){
-      socket.emit("sendMessage", message,()=>{setMessage("")});
+      socket.emit("sendMessage",user, message,()=>{setMessage("")});
     }
   };
   console.log(messages);
   return (
-    <Grid container justifyContent="center">
-      <TextField variant="outlined"
-        value={message}
-        onChange={(e) => {
-          setMessage(e.target.value);
-        }}
-        onKeyPress={(e) => {
-          sendMessage(e);
-        }}
-      />
+    <Grid container justifyContent="center" style={{ padding: "1em" }}>
+      <Grid item xs={6}>
+        <Paper>
+          <Grid container direction="column" alignItems="center" spacing={3}>
+            {messages.map((index) => {
+              return (
+                <>
+                <Grid>{index.user}</Grid>
+              <Grid>{index.message}</Grid>
+                </>
+              )
+              
+            })}
+         
+            <Grid>
+              <TextField
+                variant="outlined"
+                value={message}
+                onChange={(e) => {
+                  setMessage(e.target.value);
+                }}
+                onKeyPress={(e) => {
+                  sendMessage(e);
+                }}
+              />
+              <Button>전송</Button>
+            </Grid>
+          </Grid>
+        </Paper>
+      </Grid>
     </Grid>
   );
 }
