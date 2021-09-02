@@ -1,6 +1,7 @@
 import { BrowserRouter, Switch, Route } from "react-router-dom";
-import { Join, Room }  from "./pages/index";
-import { Header } from "./layout/index"
+import Join  from "./pages/Join";
+import Room  from "./pages/Room";
+import Header from "./layout/Header"
 
 function App() {
   return (
