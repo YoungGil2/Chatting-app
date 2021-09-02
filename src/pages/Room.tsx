@@ -6,7 +6,7 @@ import Paper from "@material-ui/core/Paper";
 import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
 
-const Server = "http://localhost:3005";
+const Server = "https://react-chatting-project.herokuapp.com";
 let socket;
 
 function Room({location}) {
@@ -65,7 +65,7 @@ function Room({location}) {
                   sendMessage(e);
                 }}
               />
-              <Button>전송</Button>
+              <Button onClick={()=>{ socket.emit("sendMessage",user, message,()=>{setMessage("")});}}>전송</Button>
             </Grid>
           </Grid>
         </Paper>
