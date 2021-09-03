@@ -1,4 +1,5 @@
 const express = require("express");
+const path = require("path");
 const app = express();
 const server = require("http").Server(app);
 const io = require("socket.io")(server, {
@@ -9,9 +10,7 @@ const io = require("socket.io")(server, {
 });
 const port = process.env.PORT || 3005;
 
-server.listen(port, () => {
-  console.log(`Listening on port ${port}`);
-});
+app.use(express.static(path.join(__dirname,"../build")));
 
 io.on("connection", function (socket) {
   console.log("유저 입장");
@@ -33,4 +32,8 @@ io.on("connection", function (socket) {
   socket.on("disconnect", () => {
     console.log("유저가 떠남");
   });
+});
+
+server.listen(port, () => {
+  console.log(`Listening on port ${port}`);
 });
