@@ -6,7 +6,7 @@ function Header(){
     return(
         <AppBar position="static">
             <ToolBar>
-                <Typography variant="h6">react</Typography>
+                <Typography variant="h6">채팅 어플리케이션</Typography>
             </ToolBar>
         </AppBar>
     )

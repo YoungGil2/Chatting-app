@@ -9,8 +9,8 @@ function App() {
       <BrowserRouter>
       <div>
           <Link to="/">홈</Link><br/>
-          <Link to="/join">조인</Link><br/>
-          <Link to="/room">방</Link><br/>
+          <Link to="/join">입장하기</Link><br/>
+          {/* <Link to="/room">방</Link><br/> */}
       </div>
         <Switch>
           <Route excact path="/join" component={Join} />
