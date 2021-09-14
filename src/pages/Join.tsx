@@ -13,12 +13,14 @@ function Join() {
       <Grid item xs={6}>
         <Paper>
           <Grid container direction="column" alignItems="center" spacing={3}>
+            <Grid item>이름을 입력하고 입장을 하시오.</Grid>
             <Grid item>
               <TextField
                 name="userName"
                 onChange={(e) => {
                   setUser(e.target.value);
                 }}
+                variant="outlined"
               ></TextField>
             </Grid>
             {/* <Grid item>
