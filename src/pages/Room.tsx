@@ -82,7 +82,7 @@ function Room({location}) {
               
             })}
          
-            <Grid>
+            <Grid container justifyContent="center">
               <TextField
                 variant="outlined"
                 value={message}
