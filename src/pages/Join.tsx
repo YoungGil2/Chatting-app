@@ -1,6 +1,6 @@
 import Grid  from "@material-ui/core/Grid";
 import TextField from "@material-ui/core/TextField";
-import Link from "@material-ui/core/Link";
+import Button from "@material-ui/core/Button";
 import Paper from "@material-ui/core/Paper";
 import { useState } from "react";
 import { Link as Nav} from "react-router-dom";
@@ -9,7 +9,7 @@ function Join() {
   const [user, setUser] = useState(""); 
   const [room, setRoom] = useState(""); 
   return (
-    <Grid container justifyContent="center" style={{ padding: "1em" }}>
+    <Grid container justifyContent="center" style={{ padding: "1em", marginTop: '10px' }}>
       <Grid item xs={6}>
         <Paper>
           <Grid container direction="column" alignItems="center" spacing={3}>
@@ -32,9 +32,9 @@ function Join() {
               ></TextField>
             </Grid> */}
             <Grid item>
-              <Link component={Nav} to={`/room?user=${user}`}>
+              <Button variant="contained"  component={Nav} to={`/room?user=${user}`}>
                 입장
-              </Link>
+              </Button>
             </Grid>
           </Grid>
         </Paper>

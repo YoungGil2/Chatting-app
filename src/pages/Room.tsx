@@ -12,45 +12,73 @@ let socket;
 function Room({location}) {
   const [user, setUser] = useState(""); 
   const [room, setRoom] = useState(""); 
-  const [message, setMessage] = useState("");
-  const [messages, setMessages] = useState([]);
 
+  const [message, setMessage] = useState("");
+
+  const [messages, setMessages] = useState([]);
+  socket = socketClient(Server);
   useEffect(()=>{
-    socket = socketClient(Server);
+   
     const {user, room} = queryString.parse(location.search);
     setUser(user);
     setRoom(room);
 
+    // 입장시 
     socket.emit("join", { user, room }, () => {
+
     });
   // eslint-disable-next-line react-hooks/exhaustive-deps
   },[Server, location.search]);
 
+
+  
+
+
+
   useEffect(()=>{
+
     socket.on("message",(message)=>{
       setMessages([...messages, message]);
     });
+
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  },[message]);
+  },[messages]);
 
   const sendMessage = (e)=> {
     if(message && e.key === "Enter"){
       socket.emit("sendMessage",user, message,()=>{setMessage("")});
     }
   };
-  console.log(messages);
   return (
     <Grid container justifyContent="center" style={{ padding: "1em" }}>
       <Grid item xs={6}>
         <Paper>
-          <Grid container direction="column" alignItems="center" spacing={3}>
+          <Grid container direction="column">
             {messages.map((index) => {
-              return (
-                <>
-                <Grid>{index.user}</Grid>
-              <Grid>{index.message}</Grid>
-                </>
-              )
+               if(user === index.user){
+                return (
+               
+                  <Grid container justifyContent="flex-end">
+                    <Grid>{index.user}: </Grid>
+                    <Grid>{index.message}</Grid>
+                  </Grid>
+                )
+              }else if(index.user === 'admin') {
+                return (
+                  <Grid container direction="column" alignItems="center" justifyContent="flex-start">
+                    <Grid>{index.user}</Grid>
+                    <Grid>{index.message}</Grid>
+                  </Grid>
+                )
+              }else {
+                return (
+                  <Grid container  justifyContent="flex-start">
+                    <Grid>{index.user}: </Grid>
+                    <Grid>{index.message}</Grid>
+                  </Grid>
+                )
+              }
+             
               
             })}
          
@@ -65,7 +93,7 @@ function Room({location}) {
                   sendMessage(e);
                 }}
               />
-              <Button onClick={()=>{ socket.emit("sendMessage",user, message,()=>{setMessage("")});}}>전송</Button>
+              <Button variant="contained" onClick={()=>{ socket.emit("sendMessage",user, message,()=>{setMessage("")});}}>전송</Button>
             </Grid>
           </Grid>
         </Paper>
