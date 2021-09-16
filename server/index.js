@@ -10,7 +10,9 @@ const io = require("socket.io")(server, {
 });
 const port = process.env.PORT || 3005;
 
-app.use(express.static(path.join(__dirname,"../build")));
+// app.use(express.static(path.join(__dirname,"../build")));
+app.use(express.static('../public'));
+app.use('*', express.static(__dirname, '../public/index.html'));
 
 io.on("connection", function (socket) {
  
