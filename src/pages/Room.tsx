@@ -6,41 +6,37 @@ import Paper from "@material-ui/core/Paper";
 import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
 
-const Server = "/";
+const Server = "https://react-chatting-project.herokuapp.com/";
 let socket;
 
 function Room({location}) {
   const [user, setUser] = useState(""); 
   const [room, setRoom] = useState(""); 
-
   const [message, setMessage] = useState("");
-
   const [messages, setMessages] = useState([]);
-  socket = socketClient(Server);
+
   useEffect(()=>{
-   
+    socket = socketClient(Server);
     const {user, room} = queryString.parse(location.search);
     setUser(user);
     setRoom(room);
 
-    // 입장시 
     socket.emit("join", { user, room }, () => {
-
     });
+
+    return ()=>{
+      socket.emit('disconnect');
+
+      socket.off();
+    }
+
   // eslint-disable-next-line react-hooks/exhaustive-deps
   },[Server, location.search]);
 
-
-  
-
-
-
   useEffect(()=>{
-
     socket.on("message",(message)=>{
       setMessages([...messages, message]);
     });
-
   // eslint-disable-next-line react-hooks/exhaustive-deps
   },[messages]);
 
@@ -55,7 +51,7 @@ function Room({location}) {
         <Paper>
           <Grid container direction="column">
             {messages.map((index) => {
-               if(user === index.user){
+              if(user === index.user){
                 return (
                
                   <Grid container justifyContent="flex-end">
@@ -78,7 +74,6 @@ function Room({location}) {
                   </Grid>
                 )
               }
-             
               
             })}
          

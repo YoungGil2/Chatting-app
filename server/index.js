@@ -13,8 +13,9 @@ const port = process.env.PORT || 3005;
 app.use(express.static(path.join(__dirname,"../build")));
 
 io.on("connection", function (socket) {
-  console.log("유저 입장");
+ 
   socket.on("join", ({ user, room }, callback) => {
+    console.log(`${user}님 접속됨`);
     socket.broadcast.emit("message", {
       user: "admin",
       message: `${user}님이 접속하였습니다.`,
