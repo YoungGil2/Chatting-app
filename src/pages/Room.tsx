@@ -15,6 +15,8 @@ function Room({location}) {
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
 
+  console.log(messages);
+ 
   useEffect(()=>{
     socket = socketClient(Server);
     const {user, room} = queryString.parse(location.search);
@@ -26,7 +28,6 @@ function Room({location}) {
 
     return ()=>{
       socket.emit('disconnect');
-
       socket.off();
     }
 
@@ -35,10 +36,10 @@ function Room({location}) {
 
   useEffect(()=>{
     socket.on("message",(message)=>{
-      setMessages([...messages, message]);
+      setMessages(messages => [ ...messages, message ]);
     });
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  },[messages]);
+  },[]);
 
   const sendMessage = (e)=> {
     if(message && e.key === "Enter"){
