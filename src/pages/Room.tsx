@@ -6,7 +6,7 @@ import Paper from "@material-ui/core/Paper";
 import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
 
-const Server = "localhost:3005";
+const Server = "/";
 let socket;
 
 function Room({location}) {
