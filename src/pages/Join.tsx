@@ -6,7 +6,7 @@ import { useState } from "react";
 import { Link as Nav} from "react-router-dom";
 
 function Join() {
-  const [user, setUser] = useState(""); 
+  const [name, setName] = useState(""); 
   const [room, setRoom] = useState(""); 
   return (
     <Grid container justifyContent="center" style={{ padding: "1em", marginTop: '10px' }}>
@@ -18,7 +18,7 @@ function Join() {
               <TextField
                 name="userName"
                 onChange={(e) => {
-                  setUser(e.target.value);
+                  setName(e.target.value);
                 }}
                 variant="outlined"
               ></TextField>
@@ -32,7 +32,7 @@ function Join() {
               ></TextField>
             </Grid> */}
             <Grid item>
-              <Button variant="contained"  component={Nav} to={`/room?user=${user}`}>
+              <Button variant="contained"  component={Nav} to={`/room?name=${name}`}>
                 입장
               </Button>
             </Grid>

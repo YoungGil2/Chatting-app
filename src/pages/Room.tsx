@@ -6,11 +6,11 @@ import Paper from "@material-ui/core/Paper";
 import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
 
-const Server = "/";
+const Server = "localhost:3005";
 let socket;
 
 function Room({location}) {
-  const [user, setUser] = useState(""); 
+  const [name, setName] = useState(""); 
   const [room, setRoom] = useState(""); 
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
@@ -19,11 +19,12 @@ function Room({location}) {
  
   useEffect(()=>{
     socket = socketClient(Server);
-    const {user, room} = queryString.parse(location.search);
-    setUser(user);
+    const {name, room} = queryString.parse(location.search);
+    setName(name);
     setRoom(room);
 
-    socket.emit("join", { user, room }, () => {
+    socket.emit("join", { name, room }, (value) => {
+      console.log(value)
     });
 
     return ()=>{
@@ -43,7 +44,7 @@ function Room({location}) {
 
   const sendMessage = (e)=> {
     if(message && e.key === "Enter"){
-      socket.emit("sendMessage",user, message,()=>{setMessage("")});
+      socket.emit("sendMessage",name, message,()=>{setMessage("")});
     }
   };
   return (
@@ -52,33 +53,33 @@ function Room({location}) {
         <Paper>
           <Grid container direction="column">
             {messages.map((index) => {
-              if(user === index.user){
+              if(name === index.name){
                 return (
                
                   <Grid container justifyContent="flex-end">
-                    <Grid>{index.user}: </Grid>
+                    <Grid>{index.name}: </Grid>
                     <Grid>{index.message}</Grid>
                   </Grid>
                 )
               }else if(index.user === 'admin') {
                 return (
                   <Grid container direction="column" alignItems="center" justifyContent="flex-start">
-                    <Grid>{index.user}</Grid>
+                    <Grid>{index.name}</Grid>
                     <Grid>{index.message}</Grid>
                   </Grid>
                 )
               }else {
                 return (
                   <Grid container  justifyContent="flex-start">
-                    <Grid>{index.user}: </Grid>
+                    <Grid>{index.name}: </Grid>
                     <Grid>{index.message}</Grid>
                   </Grid>
                 )
               }
               
             })}
-         
-            <Grid container justifyContent="center">
+          </Grid>
+          <Grid container justifyContent="center" >
               <TextField
                 variant="outlined"
                 value={message}
@@ -91,7 +92,6 @@ function Room({location}) {
               />
               <Button variant="contained" onClick={()=>{ socket.emit("sendMessage",user, message,()=>{setMessage("")});}}>전송</Button>
             </Grid>
-          </Grid>
         </Paper>
       </Grid>
     </Grid>

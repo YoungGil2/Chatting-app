@@ -8,6 +8,7 @@ const io = require("socket.io")(server, {
     methods: ["GET", "POST"],
   },
 });
+const { addUser, removeUser } = require("./user");
 const port = process.env.PORT || 3005;
 
 app.use(express.static(path.join(__dirname,"../build")));
@@ -18,25 +19,36 @@ app.get('*', (req, res) => {
 });
 
 io.on("connection", function (socket) {
- 
-  socket.on("join", ({ user, room }, callback) => {
-    console.log(`${user}님 접속됨`);
+
+  socket.on("join", ({ name, room }, callback) => {
+    const { user } = addUser({ id: socket.id, name: name });
+    console.log(`${name}님 접속됨`);
     socket.broadcast.emit("message", {
-      user: "admin",
-      message: `${user}님이 접속하였습니다.`,
+      name: "admin",
+      message: `${name}님이 접속하였습니다.`
     });
-    callback();
+    callback(name);
   });
 
-  socket.on("sendMessage", (user, message, callback) => {
+  socket.on("sendMessage", (name, message, callback) => {
     console.log(message);
-    io.emit("message", { user: user, message: message });
+    io.emit("message", { name: name, message: message });
 
     callback();
   });
 
   socket.on("disconnect", () => {
     console.log("유저가 떠남");
+
+    const user = removeUser({ id: socket.id});
+
+    if(user){
+      socket.broadcast.emit("message", {
+        name: "admin",
+        message: `${user.name}님이 퇴장하셨습니다.`
+      })
+    }
+
   });
 });
 
