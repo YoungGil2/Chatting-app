@@ -20,14 +20,16 @@ app.get('*', (req, res) => {
 
 io.on("connection", function (socket) {
 
-  socket.on("join", ({ name, room }, callback) => {
-    const { user } = addUser({ id: socket.id, name: name });
-    console.log(`${name}님 접속됨`);
+  socket.on("join", ({ name, room }) => {
+    const { user, users } = addUser({ id: socket.id, name: name });
+
     socket.broadcast.emit("message", {
       name: "admin",
-      message: `${name}님이 접속하였습니다.`
+      message: `${user.name}님이 접속하였습니다.`
     });
-    callback(name);
+    
+    io.emit("usersInfo", users);
+  
   });
 
   socket.on("sendMessage", (name, message, callback) => {
@@ -38,9 +40,9 @@ io.on("connection", function (socket) {
   });
 
   socket.on("disconnect", () => {
-    console.log("유저가 떠남");
+    const { user, users } = removeUser({ id: socket.id});
 
-    const user = removeUser({ id: socket.id});
+    io.emit("usersInfo", users);
 
     if(user){
       socket.broadcast.emit("message", {
@@ -48,7 +50,6 @@ io.on("connection", function (socket) {
         message: `${user.name}님이 퇴장하셨습니다.`
       })
     }
-
   });
 });
 
