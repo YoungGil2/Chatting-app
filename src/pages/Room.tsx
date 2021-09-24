@@ -8,7 +8,7 @@ import Grid from "@material-ui/core/Grid";
 import List from "../component/List";
 import Message from "../component/Message";
 
-const Server = "localhost:3005";
+const Server = "/";
 let socket;
 
 function Room({location}) {
