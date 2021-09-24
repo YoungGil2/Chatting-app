@@ -8,13 +8,14 @@ const addUser = ({id, name}) => {
 };
 
 const removeUser = ({ id }) => {
-    const user = { id };
-    const removeUserIndex = users.findIndex(element => element.id === user.id );
-    let removeUser;
-    if(removeUserIndex > -1){
-        removeUser = users.splice(removeUserIndex, 1)[0];
-    } 
-    return { removeUser ,users };
+    // const user = { id };
+    const removeUserIndex = users.findIndex(element => element.id === id );
+    let user;
+    if(removeUserIndex > -1){ 
+        user = users.splice(removeUserIndex, 1)[0];
+    }
+    
+    return { user ,users };
 };
 
 const getRoomData = () => {

@@ -22,7 +22,7 @@ io.on("connection", function (socket) {
 
   socket.on("join", ({ name, room }) => {
     const { user, users } = addUser({ id: socket.id, name: name });
-
+    console.log(user);
     socket.broadcast.emit("message", {
       name: "admin",
       message: `${user.name}님이 접속하였습니다.`
@@ -43,7 +43,7 @@ io.on("connection", function (socket) {
     const { user, users } = removeUser({ id: socket.id});
 
     io.emit("usersInfo", users);
-
+    console.log(user);
     if(user){
       socket.broadcast.emit("message", {
         name: "admin",
