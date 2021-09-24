@@ -2,8 +2,11 @@ import Drawer from '@material-ui/core/Drawer';
 import { Link } from "react-router-dom";
 import Hidden from "@material-ui/core/Hidden";
 
+interface sideMenuProps {
+    menuStatus: boolean;
+}
 
-function SideMenu(){
+function SideMenu({menuStatus}:sideMenuProps){
     return (
         <>
         <Hidden smUp>

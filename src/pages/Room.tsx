@@ -5,8 +5,10 @@ import TextField from "@material-ui/core/TextField";
 import Paper from "@material-ui/core/Paper";
 import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
+import List from "../component/List";
+import Message from "../component/Message";
 
-const Server = "/";
+const Server = "localhost:3005";
 let socket;
 
 function Room({location}) {
@@ -25,7 +27,6 @@ function Room({location}) {
     socket.emit("join", { name, room });
 
     socket.on("usersInfo",(userInfoArray)=> {
-      // console.log('접속자들 정보:', userInfoArray);
       setUsers(userInfoArray);
     });
 
@@ -49,55 +50,21 @@ function Room({location}) {
     }
   };
   return (
-    <Grid container justifyContent="center" direction="column" spacing={3} style={{ padding: "1em" }}>
-       <Grid item xs={6}>
+    <Grid container justifyContent="center" style={{ padding: "1em" }}>
+       <Grid item xs={12} sm={9} md={7}>
         <Paper>
-          <Grid container direction="column" >
-            <Grid container>
-              <Grid>접속자 리스트</Grid>
-            </Grid>
-            {users.map((value,key)=> {
-                return (
-                  <Grid key={key} container justifyContent="flex-end">
-                    <Grid>{value.name} </Grid>
-                  </Grid>
-                );
-            })}
-          </Grid>
+          <List ListData={users}/>
         </Paper>
       </Grid>
-      
-      
-      <Grid item xs={6}>
+    
+      <Grid item xs={12} sm={9} md={7}>
         <Paper>
-          <Grid container direction="column">
-            
-            {messages.map((value,key) => {
-              if(name === value.name){
-                return (
-                  <Grid key={key} container justifyContent="flex-end">
-                    <Grid>{value.name}: </Grid>
-                    <Grid>{value.message}</Grid>
-                  </Grid>
-                )
-              }else if(value.name === 'admin') {
-                return (
-                  <Grid key={key} container direction="column" alignItems="center" justifyContent="flex-start">
-                    <Grid>{value.name}</Grid>
-                    <Grid>{value.message}</Grid>
-                  </Grid>
-                )
-              }else {
-                return (
-                  <Grid key={key} container justifyContent="flex-start">
-                    <Grid>{value.name}: </Grid>
-                    <Grid>{value.message}</Grid>
-                  </Grid>
-                )
-              }
-              
-            })}
-          </Grid>
+          {messages.map((value, key)=> {
+            // const { name, message } = value;
+            return (
+              <Message key={key} name={value.name} text={value.message}  user={name}/>
+            );
+          })}
           <Grid container justifyContent="center" >
               <TextField
                 variant="outlined"

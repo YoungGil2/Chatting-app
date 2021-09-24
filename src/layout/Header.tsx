@@ -5,12 +5,21 @@ import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import Hidden from "@material-ui/core/Hidden";
 
-function Header(){
+interface headerProps {
+    menuOpen: (value)=> void;
+}
+
+function Header( { menuOpen }: headerProps){
+    const SideMenuToggle = () => {
+        menuOpen((prevState) =>(
+            !prevState
+        ));
+    };
     return(
         <AppBar position="static">
             <ToolBar>
-                    <Hidden smUp>
-                        <IconButton edge="start" color="inherit" aria-label="menu">
+                    <Hidden mdUp>
+                        <IconButton onClick={SideMenuToggle} edge="start" color="inherit" aria-label="menu">
                             <MenuIcon />
                         </IconButton>
                     </Hidden>
