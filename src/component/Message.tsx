@@ -12,7 +12,7 @@ function Message({name, text, user}: MessageProps){
     console.log(user, name);
     const Position = user === name ? "flex-end" : "flex-start";
     return (
-        <Grid container direction="column"  alignItems={Position} spacing={1} style={{ padding: "10px 10px"}}>
+        <Grid container direction="column" alignItems={Position} spacing={2} style={{width: "100%", padding: "10px 10px"}}>
             <Grid item>
                 <Typography>{name}</Typography>
             </Grid>
