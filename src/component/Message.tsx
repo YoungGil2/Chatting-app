@@ -17,7 +17,7 @@ function Message({name, text, user}: MessageProps){
                 <Typography>{name}</Typography>
             </Grid>
             <Grid item>
-                <Paper elevation={3} style={{display: "inline", padding: "10px 20px"}}>
+                <Paper elevation={3} style={{ padding: "10px 20px"}}>
                     {text}
                 </Paper>
             </Grid>        
