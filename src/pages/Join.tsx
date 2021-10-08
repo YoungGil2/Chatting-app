@@ -7,10 +7,9 @@ import { Link as Nav} from "react-router-dom";
 
 function Join() {
   const [name, setName] = useState(""); 
-  const [room, setRoom] = useState(""); 
   return (
     <Grid container justifyContent="center" style={{ padding: "1em", marginTop: '10px' }}>
-      <Grid item xs={6}>
+      <Grid item xs={12} sm={9} md={7}>
         <Paper>
           <Grid container direction="column" alignItems="center" spacing={3}>
             <Grid item>이름을 입력하고 입장을 하시오.</Grid>
@@ -21,16 +20,9 @@ function Join() {
                   setName(e.target.value);
                 }}
                 variant="outlined"
+                placeholder="이름을 입력해주세요."
               ></TextField>
             </Grid>
-            {/* <Grid item>
-              <TextField
-                name="roomName"
-                onChange={(e) => {
-                  setRoom(e.target.value);
-                }}
-              ></TextField>
-            </Grid> */}
             <Grid item>
               <Button variant="contained"  component={Nav} to={`/room?name=${name}`}>
                 입장

@@ -12,7 +12,6 @@ let socket;
 
 function Room({location}) {
   const [name, setName] = useState(""); 
-  const [room, setRoom] = useState(""); 
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
   const [users, setUsers] = useState([]);
@@ -20,11 +19,10 @@ function Room({location}) {
  
   useEffect(()=>{
     socket = socketClient(Server);
-    const {name, room} = queryString.parse(location.search);
+    const { name } = queryString.parse(location.search);
     setName(name);
-    setRoom(room);
 
-    socket.emit("join", { name, room });
+    socket.emit("join", { name });
 
     socket.on("usersInfo",(userInfoArray)=> {
       setUsers(userInfoArray);

@@ -20,7 +20,7 @@ app.get('*', (req, res) => {
 
 io.on("connection", function (socket) {
 
-  socket.on("join", ({ name, room }) => {
+  socket.on("join", ({ name }) => {
     const { user, users } = addUser({ id: socket.id, name: name });
     console.log(user);
     socket.broadcast.emit("message", {
