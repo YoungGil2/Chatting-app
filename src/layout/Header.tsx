@@ -36,7 +36,8 @@ function Header(){
             </ListItem>
             <ListItem>
                 <ListItemText>
-                    <Link component={DomLink} to="/join" onClick={SideMenuToggle}>방 리스트보기</Link>
+                    {/* <Link component={DomLink} to="/join" onClick={SideMenuToggle}>방 리스트보기</Link> */}
+                    <Link onClick={()=> alert("준비중입니다.")}>방 리스트</Link>
                 </ListItemText>
             </ListItem>
         </List>
